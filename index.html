@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Free menstrual cycle calculator. Estimate your next period, ovulation date, fertile window and cycle phase in seconds.">
+  <meta name="theme-color" content="#8b5cf6">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="CycleCare">
+  <title>Menstrual Cycle Calculator</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Skip to content for keyboard users -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ===== Navigation ===== -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a href="#home" class="brand">
+        <span class="brand-icon" aria-hidden="true">&#128154;</span>
+        <span class="brand-text">Cycle<span>Care</span></span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#calculator" class="nav-link">Calculator</a></li>
+        <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="#calendar" class="nav-link">Calendar</a></li>
+        <li><a href="#history" class="nav-link">History</a></li>
+        <li><a href="#learn" class="nav-link">Learn</a></li>
+        <li>
+          <button type="button" class="nav-theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+            <span class="theme-icon-light" aria-hidden="true">&#9788;</span>
+            <span class="theme-icon-dark" aria-hidden="true">&#9790;</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">&#128142; Period Tracker</p>
+          <h1>Understand Your Cycle.<br><span>Plan With Confidence.</span></h1>
+          <p class="hero-description">Calculate your estimated next period, ovulation date and fertile window in seconds.</p>
+          <a href="#calculator" class="btn btn-primary btn-lg">Calculate My Cycle</a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="cycle-ring">
+            <div class="ring-segment seg-menstrual"></div>
+            <div class="ring-segment seg-follicular"></div>
+            <div class="ring-segment seg-ovulation"></div>
+            <div class="ring-segment seg-luteal"></div>
+            <div class="ring-center">&#127800;</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Feature cards ===== -->
+    <section class="features" aria-label="Features">
+      <div class="container features-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">&#128198;</div>
+          <h3>Track Your Period</h3>
+          <p>Know exactly when your next period is expected and how many days are left in your current cycle.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">&#129514;</div>
+          <h3>Understand Ovulation</h3>
+          <p>Get a clear estimate of when ovulation is likely to occur based on your cycle length.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">&#10084;&#65039;</div>
+          <h3>Know Your Fertile Window</h3>
+          <p>See your most likely fertile days so you can plan ahead with confidence.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Calculator ===== -->
+    <section class="section" id="calculator">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cycle Calculator</h2>
+          <p>Enter your details below to get instant estimates.</p>
+        </div>
+
+        <div class="calculator-layout">
+          <div class="calculator-card">
+            <form id="cycleForm" novalidate>
+              <div class="form-group">
+                <label for="lastPeriodDate">Last Period Start Date <span class="req" aria-hidden="true">*</span></label>
+                <input type="date" id="lastPeriodDate" required aria-required="true" aria-describedby="dateError">
+                <p class="field-error" id="dateError" role="alert"></p>
+              </div>
+
+              <div class="form-group">
+                <label for="cycleLength">Average Cycle Length (days)</label>
+                <input type="number" id="cycleLength" min="21" max="45" value="28" inputmode="numeric" aria-describedby="cycleHint cycleError">
+                <p class="field-hint" id="cycleHint">21 – 45 days</p>
+                <p class="field-error" id="cycleError" role="alert"></p>
+              </div>
+
+              <div class="form-group">
+                <label for="periodDuration">Period Duration (days)</label>
+                <input type="number" id="periodDuration" min="1" max="10" value="5" inputmode="numeric" aria-describedby="durationHint durationError">
+                <p class="field-hint" id="durationHint">1 – 10 days</p>
+                <p class="field-error" id="durationError" role="alert"></p>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">Calculate My Cycle</button>
+            </form>
+          </div>
+
+          <!-- ===== Results dashboard ===== -->
+          <div class="results" id="results" hidden>
+            <div class="section-head">
+              <h2>Your Results</h2>
+              <p id="resultDateLine"></p>
+            </div>
+
+            <div class="results-grid">
+              <article class="result-card result-next">
+                <span class="result-icon" aria-hidden="true">&#128197;</span>
+                <p class="result-label">Next Period</p>
+                <p class="result-value" id="resultNextPeriod">—</p>
+              </article>
+              <article class="result-card result-ovulation">
+                <span class="result-icon" aria-hidden="true">&#129514;</span>
+                <p class="result-label">Estimated Ovulation</p>
+                <p class="result-value" id="resultOvulation">—</p>
+              </article>
+              <article class="result-card result-fertile">
+                <span class="result-icon" aria-hidden="true">&#10084;&#65039;</span>
+                <p class="result-label">Fertile Window</p>
+                <p class="result-value" id="resultFertileWindow">—</p>
+              </article>
+              <article class="result-card result-day">
+                <span class="result-icon" aria-hidden="true">&#9200;</span>
+                <p class="result-label">Current Cycle Day</p>
+                <p class="result-value" id="resultCycleDay">—</p>
+              </article>
+              <article class="result-card result-phase">
+                <span class="result-icon" aria-hidden="true">&#127804;</span>
+                <p class="result-label">Current Phase</p>
+                <p class="result-value" id="resultPhase">—</p>
+              </article>
+              <article class="result-card result-duration">
+                <span class="result-icon" aria-hidden="true">&#128277;</span>
+                <p class="result-label">Period Duration</p>
+                <p class="result-value" id="resultDuration">—</p>
+              </article>
+            </div>
+
+            <button type="button" class="btn btn-secondary" id="saveCycleBtn">&#128190; Save Cycle</button>
+
+            <div class="disclaimer">
+              <p><strong>Important:</strong> This calculator provides estimates based on the information you enter. Menstrual cycles can vary from person to person and from month to month. These calculations should not be considered medical advice or a guaranteed method of contraception. Consult a qualified healthcare professional for medical concerns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Cycle timeline ===== -->
+    <section class="section section-alt" id="timelineSection" hidden>
+      <div class="container">
+        <div class="section-head">
+          <h2>Your Cycle Timeline</h2>
+          <p>Follow along to see where you are in your cycle.</p>
+        </div>
+        <div class="timeline" role="list" aria-label="Cycle phases">
+          <div class="timeline-phase" data-phase="menstrual" role="listitem">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <p class="timeline-name">Menstrual</p>
+            <p class="timeline-days" id="timelineMenstrual">—</p>
+          </div>
+          <div class="timeline-arrow" aria-hidden="true">&#8594;</div>
+          <div class="timeline-phase" data-phase="follicular" role="listitem">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <p class="timeline-name">Follicular</p>
+            <p class="timeline-days" id="timelineFollicular">—</p>
+          </div>
+          <div class="timeline-arrow" aria-hidden="true">&#8594;</div>
+          <div class="timeline-phase" data-phase="ovulation" role="listitem">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <p class="timeline-name">Ovulation</p>
+            <p class="timeline-days" id="timelineOvulation">—</p>
+          </div>
+          <div class="timeline-arrow" aria-hidden="true">&#8594;</div>
+          <div class="timeline-phase" data-phase="luteal" role="listitem">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <p class="timeline-name">Luteal</p>
+            <p class="timeline-days" id="timelineLuteal">—</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Calendar ===== -->
+    <section class="section" id="calendar">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cycle Calendar</h2>
+          <p>View your estimated period, fertile days and ovulation on the calendar.</p>
+        </div>
+
+        <div class="calendar-card">
+          <div class="calendar-header">
+            <button type="button" class="calendar-nav" id="prevMonth" aria-label="Previous month">&#8249;</button>
+            <h3 class="calendar-title" id="calendarTitle">—</h3>
+            <button type="button" class="calendar-nav" id="nextMonth" aria-label="Next month">&#8250;</button>
+          </div>
+
+          <div class="calendar-weekdays" role="row" aria-hidden="true">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+
+          <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Monthly calendar"></div>
+
+          <div class="calendar-legend">
+            <span class="legend-item"><span class="legend-dot legend-period"></span> Period</span>
+            <span class="legend-item"><span class="legend-dot legend-fertile"></span> Fertile</span>
+            <span class="legend-item"><span class="legend-dot legend-ovulation"></span> Ovulation</span>
+            <span class="legend-item"><span class="legend-dot legend-today"></span> Today</span>
+          </div>
+
+          <p class="calendar-hint" id="calendarHint">Run a calculation to highlight your cycle on the calendar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== History ===== -->
+    <section class="section section-alt" id="history">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cycle History</h2>
+          <p>Your saved cycles are stored only in this browser.</p>
+        </div>
+
+        <div class="history-card">
+          <div class="history-toolbar">
+            <p class="history-count" id="historyCount">No saved cycles yet.</p>
+            <div class="history-actions">
+              <button type="button" class="btn btn-outline" id="exportBtn" hidden>Export</button>
+              <button type="button" class="btn btn-outline" id="importBtn">Import</button>
+              <input type="file" id="importFile" accept=".json" hidden>
+              <button type="button" class="btn btn-danger-outline" id="clearHistoryBtn" hidden>Clear All</button>
+            </div>
+          </div>
+          <ul class="history-list" id="historyList"></ul>
+          <p class="history-empty" id="historyEmpty">Save your first cycle after calculating to build your history.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Dashboard ===== -->
+    <section class="section" id="dashboard">
+      <div class="container">
+        <div class="section-head">
+          <h2>Dashboard</h2>
+          <p>Insights from all your saved cycles, read directly from your browser database.</p>
+        </div>
+
+        <p class="dashboard-empty" id="dashboardEmpty" hidden>Save cycles from the calculator to unlock your dashboard insights.</p>
+
+        <div class="dashboard-body" id="dashboardBody" hidden>
+          <div class="stat-grid">
+            <article class="stat-card">
+              <span class="stat-icon" aria-hidden="true">&#128194;</span>
+              <p class="stat-label">Total Cycles Saved</p>
+              <p class="stat-value" id="statTotal">0</p>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon" aria-hidden="true">&#128207;</span>
+              <p class="stat-label">Average Cycle Length</p>
+              <p class="stat-value" id="statAvgLength">—</p>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon" aria-hidden="true">&#128293;</span>
+              <p class="stat-label">Average Period Duration</p>
+              <p class="stat-value" id="statAvgDuration">—</p>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon" aria-hidden="true">&#128197;</span>
+              <p class="stat-label">Est. Next Period</p>
+              <p class="stat-value" id="statNextPeriod">—</p>
+            </article>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-head">
+              <h3>Cycle Length Trend</h3>
+              <p class="chart-sub">Your last 10 saved cycles</p>
+            </div>
+            <div class="chart" id="cycleChart"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Notifications ===== -->
+    <section class="section section-alt" id="notifications">
+      <div class="container">
+        <div class="section-head">
+          <h2>Reminders</h2>
+          <p>Get notified before your period and ovulation.</p>
+        </div>
+        <div class="notification-card">
+          <div class="notification-row">
+            <div class="notification-info">
+              <h3>Period Reminder</h3>
+              <p>Get a browser notification 2 days before your estimated next period.</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="periodNotifToggle" aria-label="Enable period reminder">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="notification-row">
+            <div class="notification-info">
+              <h3>Ovulation Reminder</h3>
+              <p>Get a browser notification 1 day before your estimated ovulation.</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="ovulationNotifToggle" aria-label="Enable ovulation reminder">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p class="notification-note" id="notifPermissionNote"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Privacy ===== -->
+    <section class="section" id="privacy">
+      <div class="container">
+        <div class="section-head">
+          <h2>Privacy</h2>
+          <p>Your data belongs to you.</p>
+        </div>
+        <div class="privacy-card">
+          <span class="privacy-icon" aria-hidden="true">&#128274;</span>
+          <p>Your cycle information is stored locally in your browser's database (IndexedDB) and is not sent to a server.</p>
+          <button type="button" class="btn btn-danger" id="clearDataBtn">Clear My Data</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Learn ===== -->
+    <section class="section section-alt" id="learn">
+      <div class="container">
+        <div class="section-head">
+          <h2>Learn About Your Menstrual Cycle</h2>
+          <p>Short, simple answers to common questions.</p>
+        </div>
+
+        <div class="learn-grid">
+          <article class="learn-card">
+            <span class="learn-phase-badge phase-menstrual" aria-hidden="true"></span>
+            <h3>Menstrual Phase</h3>
+            <p>This is when menstrual bleeding occurs. The uterus sheds its lining as a new cycle begins.</p>
+          </article>
+          <article class="learn-card">
+            <span class="learn-phase-badge phase-follicular" aria-hidden="true"></span>
+            <h3>Follicular Phase</h3>
+            <p>Follicles develop in the ovaries and the body prepares for ovulation. This phase overlaps with menstruation at its start.</p>
+          </article>
+          <article class="learn-card">
+            <span class="learn-phase-badge phase-ovulation" aria-hidden="true"></span>
+            <h3>Ovulation</h3>
+            <p>An egg is released from the ovary. This usually happens around the middle of the cycle.</p>
+          </article>
+          <article class="learn-card">
+            <span class="learn-phase-badge phase-luteal" aria-hidden="true"></span>
+            <h3>Luteal Phase</h3>
+            <p>The body prepares for a possible pregnancy. If the egg is not fertilized, the cycle restarts with menstruation.</p>
+          </article>
+        </div>
+
+        <div class="faq-grid">
+          <article class="faq-card">
+            <h3>What is a menstrual cycle?</h3>
+            <p>A menstrual cycle is the monthly process your body goes through to prepare for a possible pregnancy. It is counted from the first day of one period to the first day of the next.</p>
+          </article>
+          <article class="faq-card">
+            <h3>What is ovulation?</h3>
+            <p>Ovulation is the moment a mature egg is released from one of your ovaries. It typically happens about 14 days before your next period.</p>
+          </article>
+          <article class="faq-card">
+            <h3>What is a fertile window?</h3>
+            <p>The fertile window is the roughly six-day span when pregnancy is possible. Sperm can survive several days, so the window starts before ovulation and ends on ovulation day.</p>
+          </article>
+          <article class="faq-card">
+            <h3>Why can cycle lengths vary?</h3>
+            <p>Stress, sleep, illness, travel, hormonal changes and age can all shift your cycle length. A range of 21 to 45 days is common, so predictions are estimates, not guarantees.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon" aria-hidden="true">&#128154;</span>
+        <p class="footer-name">Menstrual Cycle Calculator</p>
+        <p class="footer-tagline">Understand your cycle. Plan with confidence.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#learn">Learn</a></li>
+      </ul>
+    </div>
+    <p class="footer-disclaimer">This tool provides estimates only and is not medical advice. Consult a qualified healthcare professional for medical concerns.</p>
+  </footer>
+
+  <!-- ===== Custom Modal ===== -->
+  <div class="modal-overlay" id="modalOverlay" hidden aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle"></h3>
+      <p id="modalMessage"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="modalCancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="modalConfirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Edit Cycle Modal ===== -->
+  <div class="modal-overlay" id="editModalOverlay" hidden aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+      <h3 id="editModalTitle">Edit Cycle</h3>
+      <form id="editCycleForm" novalidate>
+        <div class="form-group">
+          <label for="editCycleLength">Cycle Length (days)</label>
+          <input type="number" id="editCycleLength" min="21" max="45" inputmode="numeric">
+          <p class="field-hint">21 – 45 days</p>
+        </div>
+        <div class="form-group">
+          <label for="editPeriodDuration">Period Duration (days)</label>
+          <input type="number" id="editPeriodDuration" min="1" max="10" inputmode="numeric">
+          <p class="field-hint">1 – 10 days</p>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="editModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="editModalSave">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Loading overlay ===== -->
+  <div class="loading-overlay" id="loadingOverlay" hidden aria-hidden="true" aria-live="polite">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ===== New version banner ===== -->
+  <div class="update-banner" id="updateBanner" hidden>
+    <p>A new version is available.</p>
+    <button type="button" class="btn btn-primary btn-sm" id="updateBtn">Refresh</button>
+    <button type="button" class="update-dismiss" id="updateDismiss" aria-label="Dismiss update notification">&times;</button>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- Floating install button (PWA) -->
+  <button type="button" class="btn btn-primary btn-install" id="installAppBtn" hidden>
+    <span aria-hidden="true">&#128241;</span> Install App
+  </button>
+</body>
+</html>

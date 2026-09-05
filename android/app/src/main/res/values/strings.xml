@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CycleCare</string>
+    <string name="title_activity_main">CycleCare</string>
+    <string name="package_name">com.cyclecare.app</string>
+    <string name="custom_url_scheme">com.cyclecare.app</string>
+</resources>

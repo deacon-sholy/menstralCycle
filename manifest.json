@@ -1,0 +1,26 @@
+{
+  "name": "CycleCare - Menstrual Cycle Calculator",
+  "short_name": "CycleCare",
+  "description": "Calculate your next period, ovulation date, fertile window and cycle phase in seconds. Data stays in your browser.",
+  "lang": "en",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#8b5cf6",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

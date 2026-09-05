@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Capacitor build output
+www/
+
+# Android build
+android/build/
+android/.gradle/
+android/app/build/
+android/local.properties
+android/app/src/main/assets/public/
+
+# Built APK
+*.apk
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+.env.local
